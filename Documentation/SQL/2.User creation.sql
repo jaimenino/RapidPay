@@ -1,0 +1,16 @@
+USE [master]
+GO
+CREATE LOGIN [userRapidPay] WITH PASSWORD=N'P@ssw0rd', DEFAULT_DATABASE=[RapidPay], CHECK_EXPIRATION=OFF, CHECK_POLICY=OFF
+GO
+USE [RapidPay]
+GO
+CREATE USER [userRapidPay] FOR LOGIN [userRapidPay]
+GO
+USE [RapidPay]
+GO
+ALTER USER [userRapidPay] WITH DEFAULT_SCHEMA=[dbo]
+GO
+USE [RapidPay]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [userRapidPay]
+GO
