@@ -16,12 +16,8 @@ namespace RapidPay.Application.Services
     }
     public class CardService : ICardService
     {
-        private readonly IPaymentService _paymentService;
         private readonly RapidPayEntities _dbContext = new();
-        public CardService(IPaymentService paymentService)
-        {
-            _paymentService = paymentService;
-        }
+        
         /// <summary>
         /// Creates a new card in the database
         /// </summary>
@@ -69,11 +65,11 @@ namespace RapidPay.Application.Services
         public CardPayment MakePayment(int cardId, double amount)
         {
             //Gets Fee
-            double fee = _paymentService.GetCurrentFee();
+            double fee = PaymentService.GetCurrentFee();
 
             //Validates card and balance
             double currentBalance = GetCardBalance(cardId);
-            double paymentWithFee = Math.Round(amount * (1 + (fee / 100)), 2);
+            double paymentWithFee = Math.Round(amount + fee, 2);
             if ((currentBalance - paymentWithFee) >= 0)
             {
                 //Create payment

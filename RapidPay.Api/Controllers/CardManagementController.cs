@@ -46,7 +46,7 @@ namespace RapidPay.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { errorMessage = ex.Message });
             }
             
         }
@@ -61,11 +61,11 @@ namespace RapidPay.Api.Controllers
             try
             {
                 var balance = _cardService.GetCardBalance(card.Id);
-                return Ok(balance);
+                return Ok(new { balance = balance });
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { errorMessage = ex.Message });
             }
 
         }
@@ -84,7 +84,7 @@ namespace RapidPay.Api.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new { errorMessage = ex.Message });
             }
 
         }

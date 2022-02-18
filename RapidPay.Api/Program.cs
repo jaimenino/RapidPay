@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ICardService, CardService>();
-builder.Services.AddScoped<IPaymentService, PaymentService>();
+
 builder.Services.AddDbContext<RapidPayEntities>(options =>
   options.UseSqlServer(builder.Configuration.GetConnectionString("RapidPayEntities")));
 builder.Services.AddSwaggerGen(c =>

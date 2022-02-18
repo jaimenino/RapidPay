@@ -88,8 +88,8 @@ namespace RapidPay.Application.Services
                 if (expirationDate >= DateTime.Now)
                 {
                     //Get user from db to validate other data
-                    var userDb = _dbContext.UserTokens.Where(x => x.UserId == id && x.Token == encryptedToken)?.FirstOrDefault();
-                    if (userDb != null)
+                    var UserTokenDb = _dbContext.UserTokens.Where(x => x.UserId == id && x.Token == encryptedToken && x.IsActive)?.FirstOrDefault();
+                    if (UserTokenDb != null)
                     {
                         isValid = true;
                     }

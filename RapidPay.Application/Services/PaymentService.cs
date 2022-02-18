@@ -8,36 +8,39 @@ using System.Threading.Tasks;
 
 namespace RapidPay.Application.Services
 {
-    public interface IPaymentService
+    public static class PaymentService
     {
-        double GetCurrentFee();
-    }
-    public class PaymentService : IPaymentService
-    {
-        private readonly RapidPayEntities _dbContext = new();
+        private static readonly RapidPayEntities _dbContext = new();
+        private static Fee? currentFee;
         /// <summary>
         /// Returns the fee valid for the current hour.
         /// </summary>
         /// <returns>Fee value</returns>
-        public double GetCurrentFee()
+        public static double GetCurrentFee()
         {
-            var currentFee = _dbContext.Fees.OrderByDescending(x => x.Id)?.FirstOrDefault();
             double feeValue = 0;
 
+            //If any fee is loaded in the system
             if (currentFee == null)
             {
-                feeValue = GetNewFee(1);
-                currentFee = new Fee()
+                currentFee = _dbContext.Fees.OrderByDescending(x => x.Id)?.FirstOrDefault();
+
+                //If don't exists fee in the database
+                if (currentFee == null)
                 {
-                    CurrentFee = feeValue,
-                    TimeFrom = DateTime.Now,
-                    TimeTo = DateTime.Now.AddHours(1)
-                };
+                    feeValue = GetNewFee(1);
+                    currentFee = new Fee()
+                    {
+                        CurrentFee = feeValue,
+                        TimeFrom = DateTime.Now,
+                        TimeTo = DateTime.Now.AddHours(1)
+                    };
 
-                _dbContext.Fees.Add(currentFee);
-                _dbContext.SaveChanges();
+                    _dbContext.Fees.Add(currentFee);
+                    _dbContext.SaveChanges();
+                }
             }
-
+            
             //If current fee is still valid
             if (currentFee.TimeTo > DateTime.Now)
             {
@@ -63,7 +66,7 @@ namespace RapidPay.Application.Services
         /// </summary>
         /// <param name="currentFee"></param>
         /// <returns>New fee value</returns>
-        private double GetNewFee(double currentFee)
+        private static double GetNewFee(double currentFee)
         {
             var calculatedFee = (new Random().NextDouble() * (2 - 0.1) + 0.1);
             return Math.Round(currentFee * calculatedFee, 2);
