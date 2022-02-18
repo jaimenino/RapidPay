@@ -25,6 +25,11 @@ namespace RapidPay.Api.Controllers
             _cardService = cardService;
         }
 
+        /// <summary>
+        /// Creates a new card in the system
+        /// </summary>
+        /// <param name="card">Object with the required card information</param>
+        /// <returns>Ok if the card was created or BadRequest if there was an error</returns>
         [HttpPost("/CreateCard")]
         public IActionResult CreateCard([FromBody] CreditCardModel card)
         {
@@ -45,7 +50,11 @@ namespace RapidPay.Api.Controllers
             }
             
         }
-
+        /// <summary>
+        /// Returns the available balance for a card
+        /// </summary>
+        /// <param name="card">Unique card id</param>
+        /// <returns>Ok with the balance or BadRequest if there was an error</returns>
         [HttpGet("/GetCardBalance")]
         public IActionResult GetCardBalance([FromBody] CreditCardModel card)
         {
@@ -60,7 +69,11 @@ namespace RapidPay.Api.Controllers
             }
 
         }
-
+        /// <summary>
+        /// Registers a payment in the system
+        /// </summary>
+        /// <param name="payment">Object with the required payment information</param>
+        /// <returns>Ok if payment was registered or BadRequest if there was an error</returns>
         [HttpPost("/Pay")]
         public IActionResult MakePayment([FromBody] PaymentModel payment)
         {

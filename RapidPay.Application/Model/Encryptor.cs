@@ -12,6 +12,12 @@ namespace RapidPay.Application.Model
     {
         private static readonly string _key = "mBNx7L2mlNKwjIKzN4e/8HkvLtR0ITENprF/tZPdjCY=";
         private static readonly string _iv = "klZOXCR2k00heuFm6fjRVQ==";
+
+        /// <summary>
+        /// Hash a user password
+        /// </summary>
+        /// <param name="passwordText">Password in plain text</param>
+        /// <returns>String with the hashed password</returns>
         public static string HashPassword(string passwordText)
         {
             var sha512 = SHA512.Create();
@@ -20,6 +26,12 @@ namespace RapidPay.Application.Model
             result = result.Replace("-", "");
             return result;
         }
+        /// <summary>
+        /// Encrypt a text
+        /// </summary>
+        /// <param name="plainText">Plain text to encrypt</param>
+        /// <returns>Text encrypted</returns>
+        /// <exception cref="ArgumentNullException">Throws exception if the plain text is empty</exception>
         public static string Encrypt(string plainText)
         {
             string result;
@@ -62,7 +74,12 @@ namespace RapidPay.Application.Model
             // Return the encrypted bytes from the memory stream.
             return result;
         }
-
+        /// <summary>
+        /// Decrypt a text
+        /// </summary>
+        /// <param name="value">Encrypted text</param>
+        /// <returns>Plain text decrypted</returns>
+        /// <exception cref="ArgumentNullException">Throws exception if the encrypted text is empty</exception>
         public static string Decrypt(string value)
         {
             string result;
@@ -109,7 +126,11 @@ namespace RapidPay.Application.Model
                 
             return result;
         }
-
+        /// <summary>
+        /// Converts a string in a byte array
+        /// </summary>
+        /// <param name="value">Text to be converted</param>
+        /// <returns>Byte array of the text</returns>
         private static byte[] ToByteArray(object value)
         {
             byte[] result = new byte[] { };

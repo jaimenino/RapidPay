@@ -71,8 +71,8 @@ namespace RapidPay.Application.Services
         /// <summary>
         /// Validates the token properties and return if its information is authentic
         /// </summary>
-        /// <param name="encryptedToken"></param>
-        /// <returns></returns>
+        /// <param name="encryptedToken">Token to be validated</param>
+        /// <returns>True if token information is valid, otherwise, false</returns>
         public bool ValidateTokenProperties(string encryptedToken)
         {
             bool isValid = false;
@@ -100,17 +100,23 @@ namespace RapidPay.Application.Services
             }
             return isValid;
         }
-
+        /// <summary>
+        /// Inactivates all the active user tokens
+        /// </summary>
+        /// <param name="userId">Unique user id</param>
         private void InactivateUserTokens_ByUserId(int userId)
         {
             var userTokens = _dbContext.UserTokens.Where(x => x.UserId == userId && x.IsActive)?.ToList();
-            userTokens.ForEach(x => x.IsActive = false);
+            userTokens?.ForEach(x => x.IsActive = false);
 
-            userTokens.ForEach(x => _dbContext.Entry(x).State = EntityState.Modified);
+            userTokens?.ForEach(x => _dbContext.Entry(x).State = EntityState.Modified);
 
             _dbContext.SaveChanges();
         }
-
+        /// <summary>
+        /// Inserts a new token information in the database
+        /// </summary>
+        /// <param name="userToken">Object with all the token information</param>
         public void CreateUserToken(UserToken userToken)
         {
             _dbContext.UserTokens.Add(userToken);

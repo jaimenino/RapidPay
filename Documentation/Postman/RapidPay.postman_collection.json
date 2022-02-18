@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "4eab867f-66ae-4fda-9b5d-99f384afa53b",
+		"name": "RapidPay",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"JDoe\",\r\n  \"password\": \"Abcd1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/Authentication/authenticate",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"Authentication",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create card",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "R3JnyBz5ssveHJGqwdEftLfuA2qAOceD3fIK5U7Rr6OksIOh6KNtJfEt7OnH0jiN+h7APLivnTU7Y/8LKbt11xHTAoCLDXc1UCKl+Yxg4qU=",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"number\": \"123456789012345\",\r\n  \"initialBalance\": 1000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/CreateCard",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"CreateCard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Make Payment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "R3JnyBz5ssveHJGqwdEftLfuA2qAOceD3fIK5U7Rr6OksIOh6KNtJfEt7OnH0jiN+h7APLivnTU7Y/8LKbt11xHTAoCLDXc1UCKl+Yxg4qU=",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cardid\": 1,\r\n    \"amount\": 1000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/Pay",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"Pay"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Card Balance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "R3JnyBz5ssveHJGqwdEftLfuA2qAOceD3fIK5U7Rr6OksIOh6KNtJfEt7OnH0jiN+h7APLivnTU7Y/8LKbt11xHTAoCLDXc1UCKl+Yxg4qU=",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/GetCardBalance",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"GetCardBalance"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

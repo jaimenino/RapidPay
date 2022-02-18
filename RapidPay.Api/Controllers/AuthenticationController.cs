@@ -21,7 +21,11 @@ namespace RapidPay.Api.Controllers
             _logger = logger;
             _authenticationService = authenticationService;
         }
-
+        /// <summary>
+        /// Authenticates a user
+        /// </summary>
+        /// <param name="model">Object with the user and password of the user</param>
+        /// <returns>Ok with the user token if the user was authenticated or Unauthorized if there was an error</returns>
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
         {

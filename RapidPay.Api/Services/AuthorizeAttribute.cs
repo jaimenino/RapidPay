@@ -19,6 +19,10 @@ namespace RapidPay.Api.Services
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizeAttribute : Attribute, IAuthorizationFilter
     {
+        /// <summary>
+        /// When a class or method is marked with [Authorize] attribute, checks if the token sended in header is valid. If is not valid, returns 401 error
+        /// </summary>
+        /// <param name="context">Context of the request</param>
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             bool isAuthorized = false;
@@ -27,7 +31,7 @@ namespace RapidPay.Api.Services
             if (allowAnonymous)
                 return;
 
-            var authenticatedUser = AuthenticationHeaderValue.Parse(context.HttpContext.Request.Headers["Authorization"]); //(AuthenticatedUser)context.HttpContext.Items["AuthenticatedUser"];
+            var authenticatedUser = AuthenticationHeaderValue.Parse(context.HttpContext.Request.Headers["Authorization"]);
             if (authenticatedUser != null)
             {
                 isAuthorized = new AuthenticationService().ValidateTokenProperties(authenticatedUser.Parameter);
